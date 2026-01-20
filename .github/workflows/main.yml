@@ -32,17 +32,9 @@ jobs:
       - name: .NET Publish
         run: dotnet publish FModel -c Release --self-contained -r win-x64 -f net8.0-windows -o "./FModel/bin/Publish/" -p:PublishReadyToRun=false -p:PublishSingleFile=true -p:DebugType=None -p:GenerateDocumentationFile=false -p:DebugSymbols=false -p:AssemblyVersion=${{ github.event.inputs.appVersion }} -p:FileVersion=${{ github.event.inputs.appVersion }} -p:PublishTrimmed=true
 
-      - name: ZIP File
-        uses: papeloto/action-zip@v1.2
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v6
         with:
-          files: ./FModel/bin/Publish/FModel.exe
-          dest: FModel.zip # will end up in working directory not the Publish folder
+          path: ./FModel/bin/Publish/FModel.exe
 
-      - name: GIT Release
-        uses: marvinpinto/action-automatic-releases@latest
-        with:
-          title: "FModel v${{ github.event.inputs.appVersion }}"
-          automatic_release_tag: ${{ github.event.inputs.appVersion }}
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          prerelease: false
-          files: FModel.zip
+
