@@ -16,10 +16,7 @@ jobs:
       - name: GIT Checkout
         uses: actions/checkout@v6
         with:
-          submodules: 'true'
-
-      - name: Fetch Submodules Recursively
-        run: git submodule update --init --recursive
+          submodules: 'recursive'
 
       - name: .NET 8 Setup
         uses: actions/setup-dotnet@v5
@@ -27,10 +24,10 @@ jobs:
           dotnet-version: '8.0.x'
 
       - name: .NET Restore
-        run: dotnet restore FModel
+        run: dotnet restore FModel/FModel.slnx
 
       - name: .NET Publish
-        run: dotnet publish FModel -c Release --self-contained -r win-x64 -f net8.0-windows -o "./FModel/bin/Publish/" -p:PublishReadyToRun=false -p:PublishSingleFile=true -p:DebugType=None -p:GenerateDocumentationFile=false -p:DebugSymbols=false -p:AssemblyVersion=${{ github.event.inputs.appVersion }} -p:FileVersion=${{ github.event.inputs.appVersion }} -p:PublishTrimmed=true
+        run: dotnet publish FModel/FModel.csproj -c Release --no-restore --self-contained -r win-x64 -f net8.0-windows -o "./FModel/bin/Publish/" -p:PublishReadyToRun=false -p:PublishSingleFile=true -p:DebugType=None -p:GenerateDocumentationFile=false -p:DebugSymbols=false -p:AssemblyVersion=${{ github.event.inputs.appVersion }} -p:FileVersion=${{ github.event.inputs.appVersion }} -p:PublishTrimmed=true
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v6
