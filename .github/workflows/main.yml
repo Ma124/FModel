@@ -27,7 +27,7 @@ jobs:
         run: dotnet restore FModel/FModel.slnx
 
       - name: .NET Publish
-        run: dotnet publish FModel/FModel.csproj -c Release --no-restore --self-contained -r win-x64 -f net8.0-windows -o "./FModel/bin/Publish/" -p:PublishReadyToRun=false -p:PublishSingleFile=true -p:DebugType=None -p:GenerateDocumentationFile=false -p:DebugSymbols=false -p:AssemblyVersion=${{ github.event.inputs.appVersion }} -p:FileVersion=${{ github.event.inputs.appVersion }} -p:PublishTrimmed=true
+        run: dotnet publish FModel/FModel.csproj -c Release --no-restore --self-contained -r win-x64 -f net8.0-windows -o "./FModel/bin/Publish/" -p:PublishReadyToRun=false -p:PublishSingleFile=true -p:DebugType=None -p:GenerateDocumentationFile=false -p:DebugSymbols=false -p:AssemblyVersion=${{ github.event.inputs.appVersion }} -p:FileVersion=${{ github.event.inputs.appVersion }}
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v6
